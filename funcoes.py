@@ -164,4 +164,67 @@ def ordenar_numeros(valor1: int, valor2: int, valor3: int) -> int:
     return sorted(numeros)
 
 
+#Faça uma função que recebe, por parâmetro, a hora de inicio e a hora de término de 
+#um jogo, ambas subdivididas em 2 valores distintos: horas e minutos. O procedimento deve retornar, 
+#também por parâmetro, a duração do jogo em horas e minutos, considerando que o tempo máximo 
+#de duração de um jogo é de 24 horas e que o jogo pode começar em um dia e terminar no outro.
 
+def calcular_duracao_jogo(hora_inicio: int, minuto_inicio: int, hora_final: int, minuto_final: int) -> tuple[int, int]:
+    min_inicial_total = hora_inicio * 60 + minuto_inicio
+    min_final_total = hora_final * 60 + minuto_final
+
+    if min_final_total <= min_inicial_total:
+        min_final_total += 24 * 60  
+
+    duracao = min_final_total - min_inicial_total
+    horas_usadas = duracao // 60
+    minutos_usados = duracao % 60
+
+    return horas_usadas, minutos_usados
+
+#A prefeitura de uma cidade fez uma pesquisa entre os seus habitantes, coletando 
+#dados sobre o salário e número de filhos. Faça uma função que leia esses dados para um número 
+#não determinado de pessoas e retorne a média de salário da população, a média do número de 
+#filhos, o maior salário e o percentual de pessoas com salário até R$1350,00.
+
+
+def calcular_media_salario() -> float:
+    total_salario = 0
+    total_filhos = 0
+    maior_salario = 0
+    qtd_pessoas = 0
+    qtd_salario_ate_1350 = 0
+
+    continuar = True
+
+    while continuar:
+        salario = float(input("Digite o salário (ou um valor negativo para sair): "))
+        if salario < 0:
+            continuar = False
+        else:
+            filhos = int(input())
+
+            total_salario += salario
+            total_filhos += filhos
+            qtd_pessoas += 1
+
+            if salario > maior_salario:
+                maior_salario = salario
+            if salario <= 1350:
+                qtd_salario_ate_1350 += 1
+
+    
+    media_salario = total_salario / qtd_pessoas
+    media_filhos = total_filhos / qtd_pessoas
+    percentual_ate_1350 = (qtd_salario_ate_1350 / qtd_pessoas) * 100
+
+    return media_salario, media_filhos, maior_salario, percentual_ate_1350
+
+
+resultado = calcular_media_salario()
+print("\nResultados:")
+print(f"Média de salário: R${resultado[0]:.2f}")
+print(f"Média de filhos: {resultado[1]:.2f}")
+print(f"Maior salário: R${resultado[2]:.2f}")
+print(f"Percentual com salário até R$1350,00: {resultado[3]:.2f}%")
+        
